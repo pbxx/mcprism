@@ -1,8 +1,19 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+import mcHeader from './components/mcHeader.vue'
+import mcFooter from './components/mcFooter.vue'
 </script>
 
+<script>
+
+export default {
+  created(){
+    this.$router.push('/')
+  }
+}
+</script>
+
+<!--
 <template>
   <header>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
@@ -19,67 +30,61 @@ import HelloWorld from './components/HelloWorld.vue'
 
   <RouterView />
 </template>
+-->
+<template>
+  <mcHeader />
+  <RouterView />
+  <mcFooter />
+</template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
+<style>
+@font-face {
+  font-family: "Open Sans Regular";
+  src: local("Open Sans Regular"),
+   url(./fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf) format("truetype");
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+:root {
+  --d-navH: 110px;
+  --d-footerH: 98px;
+
+  --logoH: 68px;
+
+  --desktop-footerbutton-icon-height: 38px;
+  --desktop-footerbutton-font-size: 16px;
+  --desktop-footerbutton-caret-height: 11px;
+
+  --body-bg: #c0c0c0;
+
+  --nav-dark-gradient: #1d3d31;
+  --nav-light-gradient: #31745e;
+
+  --card-dark-gradient: #8a8a8a;
+  --card-light-gradient: #d1d1d1;
+
+  --footer-dark-gradient: #232323;
+  --footer-light-gradient: #2e2e2e;
 }
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
+body {
+  background-color: var(--body-bg)!important;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
+#app {
+  width: 100vw!important;
+  height: 100vh!important;
+  overflow: hidden!important;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
+@media (max-width: 600px) {
 
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
 }
 </style>
