@@ -18,6 +18,7 @@
 
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
 }
 
 .mch-left {
@@ -25,7 +26,7 @@
     justify-content: center;
 }
 .mch-left img {
-    margin-top: 28px;
+    margin-bottom: 0px;
     height: var(--logoH);
 }
 </style>

@@ -45,29 +45,38 @@ export default {
 }
 
 :root {
-  --d-navH: 110px;
-  --d-footerH: 98px;
+  --d-navH: 130px;
+  --d-footerH: 72px;
 
-  --logoH: 68px;
+  --logoH: 112px;
 
-  --desktop-footerbutton-icon-height: 38px;
+  --bodytext-color: #201f1f;
+  --bodytext-lightcolor: #454343;
+
+  --desktop-footerbutton-icon-height: 24px;
   --desktop-footerbutton-font-size: 16px;
   --desktop-footerbutton-caret-height: 11px;
 
-  --body-bg: #c0c0c0;
+  --bottomlink-inactive-color: #c4c4c4;
+  --bottomlink-active-color: #ffffff;
 
-  --nav-dark-gradient: #1d3d31;
-  --nav-light-gradient: #31745e;
+  --body-bg: #e3e3e3;
+/*
+  --nav-dark-gradient: #110d28;
+  --nav-light-gradient: #231759;
+*/
+  --nav-dark-gradient: #201f1f;
+  --nav-light-gradient: #454343;
 
   --card-dark-gradient: #8a8a8a;
   --card-light-gradient: #d1d1d1;
 
-  --footer-dark-gradient: #232323;
-  --footer-light-gradient: #2e2e2e;
+  --footer-dark-gradient: #201f1f;
+  --footer-light-gradient: #252424;
 }
 
 body {
-  background-color: var(--body-bg)!important;
+  background-color: var(--nav-dark-gradient)!important;
   margin: 0;
   height: 100vh;
   width: 100vw;
@@ -75,6 +84,7 @@ body {
 }
 
 #app {
+  
   width: 100vw!important;
   height: 100vh!important;
   overflow: hidden!important;
@@ -82,6 +92,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 }
 
 @media (max-width: 600px) {
