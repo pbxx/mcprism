@@ -2,7 +2,8 @@
 export default {
     data() {
         return {
-            serverList: []
+            serverList: [],
+            serverAddress: ''
         }
     },
     mounted(){
@@ -17,7 +18,14 @@ export default {
         addServer(test) {
             //test ipc
             console.log(test)
-            window.ipcRenderer.send('toMain', { command: 'addServer', address: '10.8.8.8', name: "Donnie's Minecraft Server" })
+            window.ipcRenderer.send('toMain', { command: 'addServer', address: this.serverAddress, name: "Donnie's Minecraft Server" })
+        },
+        deleteServer(index) {
+            console.log(`Server deletion requested for index ${index}`)
+            window.ipcRenderer.send('toMain', { command: 'deleteServer', index, name: "Donnie's Minecraft Server" })
+        },
+        serverSettings(index) {
+            console.log(`Server settings requested for index ${index}`)
         }
     }
 }
@@ -28,26 +36,33 @@ export default {
         <div class="sl-top">
             <h1>My Servers</h1>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                <input type="text" v-model="serverAddress" class="form-control" placeholder="Enter server address here" aria-label="Enter server address here" aria-describedby="button-addon1">
                 <button class="btn btn-success addServerButton" type="button" id="button-addon1" @click="addServer(11)"><i class="bi bi-plus"></i>Add Server</button>
             </div>
         </div>
         <div class="sl-bottom">
             <div v-if="serverList.length" class="serverList">
-                <div class="serverObject" v-for="server in serverList">
-                    <div class="ic-left">
-                        <img src="../assets/img/mc-block.png" />
+                <!--<div class="serverObject" v-for="server in serverList">-->
+                <div class="serverObject" v-for="(server, index) in serverList">
+                    <div class="so-stack">
+                        <div class="ic-left">
+                            <img src="../assets/img/mc-block.png" />
+                        </div>
+                        <div class="ic-right">
+                            <div class="srv-infoChip">
+                                    <span class="label">Name:</span>
+                                    <span class="data">{{server.name}}</span>
+                                
+                            </div>
+                            <div class="srv-infoChip">
+                                <span class="label">Address:</span>
+                                <span class="data">{{server.address}}</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="ic-right">
-                        <div class="srv-infoChip">
-                                <span class="label">Name:</span>
-                                <span class="data">{{server.name}}</span>
-                            
-                        </div>
-                        <div class="srv-infoChip">
-                            <span class="label">Address:</span>
-                            <span class="data">{{server.address}}</span>
-                        </div>
+                    <div class="so-stack buttonstack">
+                        <button type="button" class="btn btn-secondary btn-sm" @click="serverSettings(index)"><i class="bi bi-gear-fill"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm" @click="deleteServer(index)"><i class="bi bi-trash-fill"></i></button>
                     </div>
                 </div>
                 
@@ -112,19 +127,39 @@ export default {
         border-radius: 9px;
         margin: 9px 18px 12px 18px;
         padding: 12px;
+        display: grid;
+    }
+
+    .so-stack {
+        grid-column: 1;
+        grid-row: 1;
         display: flex;
     }
 
-    .serverObject > .ic-left img {
+    .so-stack > .ic-left img {
         height: 68px;
 
     }
 
-    .serverObject > .ic-right {
+    .so-stack > .ic-right {
         display: flex;
         flex-direction: column;
         font-family: "Open Sans Regular";
 
+    }
+
+    .buttonstack {
+        align-items: flex-end;
+        justify-content: flex-end;
+        display: none;
+    }
+
+    .serverObject:hover .buttonstack {
+        display: flex;
+    }
+
+    .buttonstack > button {
+        margin-left: 4px;
     }
 
     .srv-infoChip {
@@ -146,6 +181,11 @@ export default {
         font-size: 14px;
         font-weight: 500;
         margin-top: -3px;
+    }
+
+    .so-buttonbox {
+        flex-direction: row-reverse;
+        align-items: flex-end;
     }
 
     
