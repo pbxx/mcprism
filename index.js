@@ -2,7 +2,10 @@ const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const {MCProxy} = require("./mcproxy.js")
 
-var serverList = []
+var globals = {
+  inactiveServerList: [],
+  activeServer: null
+}
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -37,7 +40,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-var activeProxy = null
+
 
 ipcMain.on('toMain', (event, arg) => {
   console.log(arg) // prints "ping" in the Node console
@@ -46,23 +49,67 @@ ipcMain.on('toMain', (event, arg) => {
   if (arg.command == 'addServer') {
     //add a server to saved servers
     var serverObject = { name: arg.name, address: arg.address }
-    serverList.push(serverObject)
-    if (!activeProxy) {
-      activeProxy = new MCProxy({verbose: true, host: arg.address, interface: "10.88.0.117"}, (response) => {
-        console.log(response)
-      })
-    }
-    event.reply('fromMain', { command: 'updateServers', serverList })
+    globals.inactiveServerList.push(serverObject)
+    event.reply('fromMain', { command: 'updateServers', inactiveServerList: globals.inactiveServerList })
+
+    
   } else if (arg.command == 'deleteServer') {
     //handle deletion request
     //currently just shut down active proxy set
-    activeProxy.close(() => {
-      //all proxies closed
-      console.log(`All proxies closed successfully!`)
-      activeProxy = null
+    globals.inactiveServerList.splice(arg.index, 1)
 
+
+  } else if (arg.command == "activateProxy") {
+    activateProxy(arg.index, "10.88.0.117", () => {
+      event.reply('fromMain', { command: 'updateStatus', proxyStatus: true, activeProxyAddress: globals.inactiveServerList[arg.index].address })
+      
     })
+
+    
+  } else if (arg.command == "deactivateProxy") {
+    deactivateProxy((response) => {
+      //proxy deactivated
+      event.reply('fromMain', { command: 'updateStatus', proxyStatus: false, activeProxyAddress: null })
+    })
+
 
   }
 })
+
+
+function activateProxy(index, interface, callback) {
+  if (!globals.activeServer) {
+    var serverObj = {...globals.inactiveServerList[index]}
+    var proxy = new MCProxy({verbose: true, host: serverObj.address, interface}, (response) => {
+      console.log(response)
+
+      globals.activeServer = {...serverObj, proxy, index} //set active server globally
+      globals.inactiveServerList[index] = null //remove activated server from inactive list, but hold its place
+
+      if (callback) {
+        callback(response)
+      }
+    })
+  }
+}
+
+function deactivateProxy(callback) {
+  globals.activeServer.proxy.close(() => {
+    //all proxies closed
+    console.log(`All proxies closed successfully!`)
+    //save the index for refilling the space in inactive servers
+    var i = globals.activeServer.index
+    //strip proxy and index from the server object
+    delete globals.activeServer.proxy
+    delete globals.activeServer.index
+
+    globals.inactiveServerList[i] = globals.activeServer //put the once-active server object back into inactiveServerList
+
+    globals.activeServer = null //set activeServer to null to prepare for re-activation
+
+    if (callback) {
+      callback(`All proxies closed successfully!`)
+    }
+  })
+}
 

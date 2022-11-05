@@ -1,16 +1,29 @@
+<script setup>
+import proxyStatusBar from '../components/serverlist/proxyStatus.vue'
+import serverObject from '../components/serverlist/serverObject.vue'
+import { ref, computed } from 'vue'
+</script>
+
 <script>
 export default {
-    data() {
+    data: function() {
         return {
-            serverList: [],
-            serverAddress: ''
+            inactiveServerList: [],
+            serverAddress: '',
+            activeServer: null,
+            proxyStatus: false
         }
     },
     mounted(){
         window.ipcRenderer.receive('fromMain', (arg) => {
             console.log(arg) // prints "pong" in the DevTools console
             if (arg.command == 'updateServers') {
-                this.serverList = arg.serverList
+                //this is a server list update
+                this.inactiveServerList = arg.inactiveServerList
+            } else if (arg.command == "updateStatus") {
+                //this is a status update
+                this.activeServer = arg.activeServer
+                this.proxyStatus = arg.proxyStatus
             }
         })
     },
@@ -20,12 +33,11 @@ export default {
             console.log(test)
             window.ipcRenderer.send('toMain', { command: 'addServer', address: this.serverAddress, name: "Donnie's Minecraft Server" })
         },
-        deleteServer(index) {
-            console.log(`Server deletion requested for index ${index}`)
-            window.ipcRenderer.send('toMain', { command: 'deleteServer', index, name: "Donnie's Minecraft Server" })
-        },
-        serverSettings(index) {
-            console.log(`Server settings requested for index ${index}`)
+    },
+    provide: function() {
+        return {
+            activeServer: computed(() => this.activeServer),
+            proxyStatus: computed(() => this.proxyStatus),
         }
     }
 }
@@ -34,6 +46,7 @@ export default {
 <template>
     <div class="mcPage">
         <div class="sl-top">
+            <proxyStatusBar></proxyStatusBar>
             <h1>My Servers</h1>
             <div class="input-group mb-3">
                 <input type="text" v-model="serverAddress" class="form-control" placeholder="Enter server address here" aria-label="Enter server address here" aria-describedby="button-addon1">
@@ -41,9 +54,14 @@ export default {
             </div>
         </div>
         <div class="sl-bottom">
-            <div v-if="serverList.length" class="serverList">
+            <div class="activeServerList">
+                <p v-if="!activeServer && inactiveServerList.length">No active servers. Click the activate button on a server to begin. </p>
+            </div>
+            <div v-if="inactiveServerList.length" class="inactiveServerList">
+                <serverObject v-for="(server, index) in inactiveServerList" :address="server.address" :index="index" />
                 <!--<div class="serverObject" v-for="server in serverList">-->
-                <div class="serverObject" v-for="(server, index) in serverList">
+                <!--
+                <div class="serverObject" v-for="(server, index) in inactiveServerList">
                     <div class="so-stack">
                         <div class="ic-left">
                             <img src="../assets/img/mc-block.png" />
@@ -64,7 +82,7 @@ export default {
                         <button type="button" class="btn btn-secondary btn-sm" @click="serverSettings(index)"><i class="bi bi-gear-fill"></i></button>
                         <button type="button" class="btn btn-danger btn-sm" @click="deleteServer(index)"><i class="bi bi-trash-fill"></i></button>
                     </div>
-                </div>
+                </div>-->
                 
             </div>
             <div v-else class="noServers">
@@ -97,15 +115,20 @@ export default {
         font-family: "Open Sans Regular";
         padding: 0 18px 0 18px;
         margin-bottom: 12px;
+        margin-right: 18px;
+    }
+
+    .input-group {
+        padding: 0 18px 0 18px;
     }
 
     .sl-top {
         background-color: white;
-        height: 110px;
-        padding: 14px 18px 0 18px;
+        height: 138px;
+        
     }
     .sl-bottom {
-        height: calc(100% - 110px);
+        height: calc(100% - 138px);
         overflow-x: hidden;
         overflow-y: auto;
         padding: 18px 18px 0 18px;
@@ -122,71 +145,14 @@ export default {
         padding: 8px 18px 0 18px;
     }
 
-    .serverObject {
-        background-color: #c8c8c8;
-        border-radius: 9px;
-        margin: 9px 18px 12px 18px;
-        padding: 12px;
-        display: grid;
-    }
-
-    .so-stack {
-        grid-column: 1;
-        grid-row: 1;
-        display: flex;
-    }
-
-    .so-stack > .ic-left img {
-        height: 68px;
-
-    }
-
-    .so-stack > .ic-right {
-        display: flex;
-        flex-direction: column;
-        font-family: "Open Sans Regular";
-
-    }
-
-    .buttonstack {
-        align-items: flex-end;
-        justify-content: flex-end;
-        display: none;
-    }
-
-    .serverObject:hover .buttonstack {
-        display: flex;
-    }
-
-    .buttonstack > button {
-        margin-left: 4px;
-    }
-
-    .srv-infoChip {
-        display: flex;
-        flex-direction: column;
-        font-family: "Open Sans Regular";
-        padding: 0 8px 0 8px;
-
-    }
-
-    .srv-infoChip > .label {
-        color: var(--bodytext-color);
-        font-size: 10px;
-        font-weight: 700;
-    }
-
-    .srv-infoChip > .data {
+    .activeServerList p {
         color: var(--bodytext-color);
         font-size: 14px;
-        font-weight: 500;
-        margin-top: -3px;
+        font-family: "Open Sans Regular";
+        padding: 8px 18px 0 18px;
     }
 
-    .so-buttonbox {
-        flex-direction: row-reverse;
-        align-items: flex-end;
-    }
+    
 
     
 </style>
