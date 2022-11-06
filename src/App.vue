@@ -1,5 +1,6 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import { ref, computed } from 'vue'
 import mcHeader from './components/mcHeader.vue'
 import mcFooter from './components/mcFooter.vue'
 </script>
@@ -7,8 +8,35 @@ import mcFooter from './components/mcFooter.vue'
 <script>
 
 export default {
-  created(){
+  data: function() {
+    var serverList = []
+    var activeServerIndex = -1
+    return {
+        serverList,
+        activeServerIndex
+    }
+  },
+  mounted() {
+    window.ipcRenderer.receive('fromMain', (arg) => {
+      console.log(arg) // prints "pong" in the DevTools console
+      if (arg.command == 'updateState') {
+        //this is a server list update
+        console.log(this.serverListLength)
+        console.log(this.activeServerIndex)
+
+        this.serverList = arg.state.serverList
+        this.activeServerIndex = arg.state.activeServerIndex
+      }
+    })
+  },
+  created() {
     this.$router.push('/')
+  },
+  provide() {
+    return {
+      activeServerIndex: computed(() => this.activeServerIndex),
+      serverList: computed(() => this.serverList),
+    }
   }
 }
 </script>

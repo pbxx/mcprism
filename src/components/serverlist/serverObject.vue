@@ -1,11 +1,20 @@
 <script>
 export default {
-    props: ["address", "image", "index"],
+    props: ["address", "image", "index", "isActiveServerDisplay"],
+    inject: ['serverList', 'activeServerIndex'],
     created() {
         // props are exposed on `this`
-        console.log(this.address)
+        console.log(`This is happening in serverObject.vue`, this.address)
     },
     methods: {
+        deactivateProxy(index) {
+            console.log(`Proxy de-activation requested for index ${index}`)
+            window.ipcRenderer.send('toMain', { command: 'deactivateProxy', index })
+        },
+        activateProxy(index) {
+            console.log(`Proxy activation requested for index ${index}`)
+            window.ipcRenderer.send('toMain', { command: 'activateProxy', index })
+        },
         deleteServer(index) {
             console.log(`Server deletion requested for index ${index}`)
             window.ipcRenderer.send('toMain', { command: 'deleteServer', index })
@@ -13,12 +22,40 @@ export default {
         serverSettings(index) {
             console.log(`Server settings requested for index ${index}`)
         }
-    }
+    },
+    
 }
 </script>
 
 <template>
-    <div class="serverObject">
+    <div v-if="isActiveServerDisplay && activeServerIndex == -1" class="serverObject inactive">
+        <div class="so-inactive-textbox">
+            <h2>No server active</h2>
+            <p>Click the <em>activate</em> button on a server below to start the proxy</p>
+        </div>
+    </div>
+    <div v-else-if="isActiveServerDisplay && activeServerIndex != -1" class="serverObject active">
+        <div class="so-stack">
+            <div class="ic-left">
+                <img src="../../assets/img/mc-block.png" />
+            </div>
+            <div class="ic-right">
+                <div class="srv-infoChip">
+                        <span class="label">Name:</span>
+                        <span class="data">Loading server info...</span>
+                    
+                </div>
+                <div class="srv-infoChip">
+                    <span class="label">Address:</span>
+                    <span class="data">{{serverList[activeServerIndex].address}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="so-stack buttonstack">
+            <button type="button" class="btn btn-success btn-sm" @click="deactivateProxy(index)"><i class="bi bi-power"></i></button>
+        </div>
+    </div>
+    <div v-else-if="!serverList[index].active" class="serverObject">
         <div class="so-stack">
             <div class="ic-left">
                 <img src="../../assets/img/mc-block.png" />
@@ -36,6 +73,7 @@ export default {
             </div>
         </div>
         <div class="so-stack buttonstack">
+            <button type="button" class="btn btn-success btn-sm" @click="activateProxy(index)"><i class="bi bi-power"></i></button>
             <button type="button" class="btn btn-secondary btn-sm" @click="serverSettings(index)"><i class="bi bi-gear-fill"></i></button>
             <button type="button" class="btn btn-danger btn-sm" @click="deleteServer(index)"><i class="bi bi-trash-fill"></i></button>
         </div>
@@ -49,6 +87,15 @@ export default {
         margin: 9px 18px 12px 18px;
         padding: 12px;
         display: grid;
+    }
+
+    .serverObject.inactive {
+        background-color: #515e6b;
+        padding: 8px;
+    }
+
+    .serverObject.active {
+        background-color: #73ace6;
     }
 
     .so-stack {
@@ -68,6 +115,7 @@ export default {
         font-family: "Open Sans Regular";
 
     }
+    
 
     .buttonstack {
         align-items: flex-end;
@@ -81,6 +129,33 @@ export default {
 
     .buttonstack > button {
         margin-left: 4px;
+    }
+
+    .so-inactive-textbox {
+        width:100%;
+        flex-grow: 1;
+        border-style: dashed;
+        border-color: #7e868f;
+        border-radius: 9px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+
+    .so-inactive-textbox h2 {
+        color: #9faab6;
+        font-size: 19px;
+        text-align: center;
+        margin-top: 4px;
+        margin-bottom: 2px;
+    }
+
+    .so-inactive-textbox p {
+        color: #7e868f;
+        font-size: 15px;
+        text-align: center;
+        margin-bottom: 4px;
     }
 
     .srv-infoChip {

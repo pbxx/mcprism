@@ -11,7 +11,7 @@ import "bootstrap"
 //import './assets/main.css'
 
 const app = createApp(App)
-
+app.config.unwrapInjectedRef = true
 app.use(createPinia())
 app.use(router)
 

@@ -1,19 +1,21 @@
 <script>
 export default {
-    inject: ['proxyStatus', 'activeServer'],
+    inject: ['serverList', 'activeServerIndex'],
     mounted() {
-        console.log(this.proxyStatus.value)
-    }
+        //console.log(this.serverList.length)
+        console.log(`This is happening in proxyStatus.vue`, this.activeServerIndex)
+    }, 
+    
 }
 </script>
 
 <template>
     <div class="prs-container">
         <span >Proxy status: </span>
-        <span class="prs-statusDisplay active" v-if="proxyStatus.value">active</span>
+        <span class="prs-statusDisplay active" v-if="activeServerIndex != -1">active</span>
         <span class="prs-statusDisplay" v-else>inactive</span>
-        <i v-if="proxyStatus.value" class="bi bi-arrow-left-right"></i>
-        <span v-if="proxyStatus.value">{{activeServer.value.address}}</span>
+        <i v-if="activeServerIndex != -1" class="bi bi-arrow-left-right"></i>
+        <span v-if="activeServerIndex != -1">{{serverList[activeServerIndex].address}}</span>
     </div>
 </template>
 

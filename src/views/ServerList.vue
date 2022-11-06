@@ -1,31 +1,25 @@
 <script setup>
+import { get } from 'http';
 import proxyStatusBar from '../components/serverlist/proxyStatus.vue'
 import serverObject from '../components/serverlist/serverObject.vue'
-import { ref, computed } from 'vue'
+
 </script>
 
 <script>
 export default {
     data: function() {
         return {
-            inactiveServerList: [],
-            serverAddress: '',
-            activeServer: null,
-            proxyStatus: false
+            serverAddress: ''
         }
     },
-    mounted(){
-        window.ipcRenderer.receive('fromMain', (arg) => {
-            console.log(arg) // prints "pong" in the DevTools console
-            if (arg.command == 'updateServers') {
-                //this is a server list update
-                this.inactiveServerList = arg.inactiveServerList
-            } else if (arg.command == "updateStatus") {
-                //this is a status update
-                this.activeServer = arg.activeServer
-                this.proxyStatus = arg.proxyStatus
-            }
-        })
+    computed: {
+        serverListArr() {
+            return this.serverList
+        },
+    },
+    created() {
+        console.log(`This is happening in serverList.vue`, this.serverListArr.length)
+        console.log(`This is happening in serverList.vue`, this.serverAddress)
     },
     methods: {
         addServer(test) {
@@ -33,13 +27,14 @@ export default {
             console.log(test)
             window.ipcRenderer.send('toMain', { command: 'addServer', address: this.serverAddress, name: "Donnie's Minecraft Server" })
         },
-    },
-    provide: function() {
-        return {
-            activeServer: computed(() => this.activeServer),
-            proxyStatus: computed(() => this.proxyStatus),
+        getServerListLength() {
+            var len = this.serverList.length
+            return len
         }
-    }
+    },
+    inject: ['serverList', 'activeServerIndex'],
+    
+    
 }
 </script>
 
@@ -55,34 +50,12 @@ export default {
         </div>
         <div class="sl-bottom">
             <div class="activeServerList">
-                <p v-if="!activeServer && inactiveServerList.length">No active servers. Click the activate button on a server to begin. </p>
+                <!--<p v-if="activeServerIndex != null && serverList.length">No active servers. Click the activate button on a server to begin. </p>-->
+                <serverObject v-if="serverList.length > 0" :isActiveServerDisplay="true" />
             </div>
-            <div v-if="inactiveServerList.length" class="inactiveServerList">
-                <serverObject v-for="(server, index) in inactiveServerList" :address="server.address" :index="index" />
-                <!--<div class="serverObject" v-for="server in serverList">-->
-                <!--
-                <div class="serverObject" v-for="(server, index) in inactiveServerList">
-                    <div class="so-stack">
-                        <div class="ic-left">
-                            <img src="../assets/img/mc-block.png" />
-                        </div>
-                        <div class="ic-right">
-                            <div class="srv-infoChip">
-                                    <span class="label">Name:</span>
-                                    <span class="data">{{server.name}}</span>
-                                
-                            </div>
-                            <div class="srv-infoChip">
-                                <span class="label">Address:</span>
-                                <span class="data">{{server.address}}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="so-stack buttonstack">
-                        <button type="button" class="btn btn-secondary btn-sm" @click="serverSettings(index)"><i class="bi bi-gear-fill"></i></button>
-                        <button type="button" class="btn btn-danger btn-sm" @click="deleteServer(index)"><i class="bi bi-trash-fill"></i></button>
-                    </div>
-                </div>-->
+            <div v-if="serverList.length > 0" class="serverList">
+                <serverObject v-for="(server, index) in serverList" :address="server.address" :index="index" />
+                
                 
             </div>
             <div v-else class="noServers">
