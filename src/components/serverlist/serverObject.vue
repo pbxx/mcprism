@@ -52,7 +52,7 @@ export default {
             </div>
         </div>
         <div class="so-stack buttonstack">
-            <button type="button" class="btn btn-success btn-sm" @click="deactivateProxy(index)"><i class="bi bi-power"></i></button>
+            <button type="button" class="btn btn-secondary btn-sm" @click="deactivateProxy(index)"><i class="bi bi-power"></i></button>
         </div>
     </div>
     <div v-else-if="!serverList[index].active" class="serverObject">
@@ -87,15 +87,16 @@ export default {
         margin: 9px 18px 12px 18px;
         padding: 12px;
         display: grid;
+        box-shadow: 0px 1px 24px -7px rgba(0,0,0,0.75);
     }
 
     .serverObject.inactive {
-        background-color: #515e6b;
+        background: linear-gradient(0deg, #515e6b, #6d7e8e);
         padding: 8px;
     }
 
     .serverObject.active {
-        background-color: #73ace6;
+        background: linear-gradient(0deg, #1c1c1d, #2b2c2d);
     }
 
     .so-stack {
@@ -136,7 +137,7 @@ export default {
         flex-grow: 1;
         border-style: dashed;
         border-color: #7e868f;
-        border-radius: 9px;
+        border-radius: 7px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -145,9 +146,9 @@ export default {
 
     .so-inactive-textbox h2 {
         color: #9faab6;
-        font-size: 19px;
+        font-size: 17px;
         text-align: center;
-        margin-top: 4px;
+        margin-top: 7px;
         margin-bottom: 2px;
     }
 
@@ -172,11 +173,19 @@ export default {
         font-weight: 700;
     }
 
+    .serverObject.active .srv-infoChip > .label {
+        color: #a7a7a7!important;
+    }
+
     .srv-infoChip > .data {
         color: var(--bodytext-color);
         font-size: 14px;
         font-weight: 500;
         margin-top: -3px;
+    }
+
+    .serverObject.active .srv-infoChip > .data {
+        color: white!important;
     }
 
     .so-buttonbox {

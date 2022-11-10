@@ -9,10 +9,10 @@ var globalState = {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 420,
-    height: 800,
+    width: 400,
+    height: 700,
     titleBarStyle: 'hidden',
-    titleBarOverlay: true,
+    titleBarOverlay: false,
     //frame: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -21,7 +21,7 @@ function createWindow() {
 
   win.loadFile("dist/index.html");
   // Open the DevTools.
-  win.webContents.openDevTools()
+  win.webContents.openDevTools({ mode: "detach" })
 }
 
 app.whenReady().then(() => {
@@ -74,6 +74,14 @@ ipcMain.on('toMain', (event, arg) => {
     })
 
 
+  } else if (arg.command == "closeWindow") {
+    //event.sender.close()
+    BrowserWindow.getAllWindows()[event.sender.id-1].close()
+  } else if (arg.command == "minimizeWindow") {
+    //event.sender.minimize()
+    BrowserWindow.getAllWindows()[event.sender.id-1].minimize()
+    //console.log(event.sender.id)
+
   }
 })
 
@@ -113,4 +121,3 @@ function deactivateProxy(callback) {
     }
   })
 }
-

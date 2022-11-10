@@ -2,6 +2,8 @@
 import { get } from 'http';
 import proxyStatusBar from '../components/serverlist/proxyStatus.vue'
 import serverObject from '../components/serverlist/serverObject.vue'
+import serverDivider from '../components/serverlist/serverlist-divider.vue'
+
 
 </script>
 
@@ -49,10 +51,12 @@ export default {
             </div>
         </div>
         <div class="sl-bottom">
+            <serverDivider v-if="serverList.length > 0" text="Active Server"/>
             <div class="activeServerList">
                 <!--<p v-if="activeServerIndex != null && serverList.length">No active servers. Click the activate button on a server to begin. </p>-->
                 <serverObject v-if="serverList.length > 0" :isActiveServerDisplay="true" />
             </div>
+            <serverDivider v-if="serverList.length > 0" text="Saved Servers"/>
             <div v-if="serverList.length > 0" class="serverList">
                 <serverObject v-for="(server, index) in serverList" :address="server.address" :index="index" />
                 
