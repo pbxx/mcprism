@@ -1,11 +1,4 @@
-<script setup>
-
-</script>
-
 <script>
-
-
-
 export default {
     methods: {
         closeWindow: function() {
@@ -28,6 +21,11 @@ export default {
 </template>
 
 <style>
+:root {
+    --wbuttons-height: 32px;
+    --wbuttons-fontsize: 12px;
+}
+
 .windowButtons {
     height: var(--d-navH)!important;
     width: 100vw!important;
@@ -42,7 +40,7 @@ export default {
 .windowButtons button {
     border-style: none;
     background-color: transparent;
-    height: 32px;
+    height: var(--wbuttons-height);
     -webkit-app-region: no-drag;
     padding: 5px!important;
 }
@@ -56,13 +54,13 @@ export default {
 }
 
 .windowButtons button > i {
-    color: white;
+    color: var(--bottomlink-inactive-color);
     margin: 0px;
     transition: 100ms;
 }
 
 .windowButtons button:hover > i {
-    color: #555cc0;
+    color: var(--bottomlink-active-color);
 
 }
 </style>

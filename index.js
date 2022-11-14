@@ -1,6 +1,9 @@
 const { app, BrowserWindow, ipcMain } = require("electron");
 const path = require("path");
 const {MCProxy} = require("./mcproxy.js")
+const os = require('node:os');
+
+console.log(os.networkInterfaces())
 
 var globalState = {
   serverList: [],
@@ -30,6 +33,7 @@ app.whenReady().then(() => {
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
+      
     }
   });
 });
