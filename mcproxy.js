@@ -4,7 +4,7 @@ const st = require('simpletype-js')
 
 module.exports.MCProxy = class {
     constructor(options, callback) {
-        let tcheck = st.checkSync({host: "string", interface: "string"}, options)
+        let tcheck = st.checkSync({host: "string", interface: "string", port: "number"}, options)
         let err = null
 
         if (tcheck.correct) {
@@ -12,7 +12,7 @@ module.exports.MCProxy = class {
             this.options = options
             var primaryPortOptions = {
                 address: options.host,
-                port: 19132,
+                port: options.port,
                 ipv6: false,
                 localaddress: options.interface,
                 localport: 19132,
@@ -22,7 +22,7 @@ module.exports.MCProxy = class {
 
             var secondaryPortOptions = {
                 address: options.host,
-                port: 19132,
+                port: options.port,
                 ipv6: false,
                 localaddress: options.interface,
                 localport: 56441, //this is what is different here

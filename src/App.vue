@@ -10,13 +10,18 @@ import mcFooter from './components/mcFooter.vue'
 export default {
   data: function() {
     var serverList = []
+    var interfaceList = []
     var activeServerIndex = -1
     return {
         serverList,
+        interfaceList,
         activeServerIndex
     }
   },
   mounted() {
+    //request an initial state update
+    window.ipcRenderer.send('toMain', { command: 'requestStateUpdate' })
+    //handle state updates
     window.ipcRenderer.receive('fromMain', (arg) => {
       console.log(arg) // prints "pong" in the DevTools console
       if (arg.command == 'updateState') {
@@ -25,6 +30,7 @@ export default {
         console.log(this.activeServerIndex)
 
         this.serverList = arg.state.serverList
+        this.interfaceList = arg.state.interfaceList
         this.activeServerIndex = arg.state.activeServerIndex
       }
     })
@@ -36,6 +42,7 @@ export default {
     return {
       activeServerIndex: computed(() => this.activeServerIndex),
       serverList: computed(() => this.serverList),
+      interfaceList: computed(() => this.interfaceList),
     }
   }
 }

@@ -11,13 +11,23 @@ import serverDivider from '../components/serverlist/serverlist-divider.vue'
 export default {
     data: function() {
         return {
-            serverAddress: ''
+            serverAddress: '',
+            displayError: ''
         }
     },
     computed: {
         serverListArr() {
             return this.serverList
         },
+    },
+    mounted() {
+        window.ipcRenderer.receive('fromMain', (arg) => {
+        console.log(arg) // prints "pong" in the DevTools console
+            if (arg.command == 'errorAddingServer') {
+                //this is a server list update
+                this.showError(arg.error)
+            }
+        })
     },
     created() {
         console.log(`This is happening in serverList.vue`, this.serverListArr.length)
@@ -27,7 +37,19 @@ export default {
         addServer(test) {
             //test ipc
             console.log(test)
-            window.ipcRenderer.send('toMain', { command: 'addServer', address: this.serverAddress, name: "Donnie's Minecraft Server" })
+            if (this.serverAddress) {
+                window.ipcRenderer.send('toMain', { command: 'addServer', address: this.serverAddress, name: "Donnie's Minecraft Server" })
+            } else {
+                //server address is not valid
+                this.showError("No server address entered!")
+            }
+            
+        },
+        showError(err) {
+            this.displayError = err
+            setTimeout(() => {
+                this.displayError = ''
+            }, 3500)
         },
         getServerListLength() {
             var len = this.serverList.length
@@ -42,15 +64,16 @@ export default {
 
 <template>
     <div class="mcPage">
-        <div class="sl-top">
+        <div class="sl-top" :class="{ errored: displayError }">
             <proxyStatusBar></proxyStatusBar>
             <h1>My Servers</h1>
             <div class="input-group mb-3">
                 <input type="text" v-model="serverAddress" class="form-control" placeholder="Enter server address here" aria-label="Enter server address here" aria-describedby="button-addon1">
                 <button class="btn btn-success addServerButton" type="button" id="button-addon1" @click="addServer(11)"><i class="bi bi-plus"></i>Add Server</button>
             </div>
+            <p v-if="displayError" class="errortext">{{displayError}}</p>
         </div>
-        <div class="sl-bottom">
+        <div class="sl-bottom" :class="{ errored: displayError }">
             <serverDivider v-if="serverList.length > 0" text="Active Server"/>
             <div class="activeServerList">
                 <!--<p v-if="activeServerIndex != null && serverList.length">No active servers. Click the activate button on a server to begin. </p>-->
@@ -110,6 +133,17 @@ export default {
         overflow-y: auto;
         padding: 18px 18px 0 18px;
     }
+    .sl-top.errored {
+        height: 158px;
+        
+    }
+    .sl-top.errored > .input-group {
+        margin-bottom: 4px!important;
+        
+    }
+    .sl-bottom.errored {
+        height: calc(100% - 158px);
+    }
 
     .addServerButton > i {
         font-size: 16px;
@@ -129,7 +163,11 @@ export default {
         padding: 8px 18px 0 18px;
     }
 
-    
+    .errortext {
+        padding: 0 22px 0 22px;
+        color: red;
+        font-size: 14px;
+    }
 
     
 </style>

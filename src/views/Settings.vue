@@ -1,7 +1,6 @@
 <script setup>
 import { get } from 'http';
 import proxyStatusBar from '../components/serverlist/proxyStatus.vue'
-import serverObject from '../components/serverlist/serverObject.vue'
 import serverDivider from '../components/serverlist/serverlist-divider.vue'
 
 
@@ -11,24 +10,25 @@ import serverDivider from '../components/serverlist/serverlist-divider.vue'
 export default {
     data: function() {
         return {
-            serverAddress: ''
+            //selectedInterface: {}
         }
     },
     created() {
-        console.log(`This is happening in Settings.vue`, this.serverAddress)
+        console.log(`This is happening in Settings.vue`, this.selectedInterface)
     },
     methods: {
-        selectInterface(key, index) {
+        selectInterface(event, index) {
             //test ipc
-            console.log(test)
-            window.ipcRenderer.send('toMain', { command: 'addServer', address: this.serverAddress, name: "Donnie's Minecraft Server" })
+            //console.log(test)
+            ///var iface = this.interfaceList[index]
+            window.ipcRenderer.send('toMain', { command: 'selectInterface', index })
         },
         getServerListLength() {
             var len = this.serverList.length
             return len
         }
     },
-    inject: ['activeServerIndex', 'interfaceList'],
+    inject: ['activeServerIndex', 'interfaceList', 'selectedInterface'],
     
     
 }
@@ -44,12 +44,10 @@ export default {
             <serverDivider text="Default Interface"/>
             <div class="settingsObject">
                 <!--<p v-if="activeServerIndex != null && serverList.length">No active servers. Click the activate button on a server to begin. </p>-->
-                <select class="form-select" multiple aria-label="multiple select example">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                    </select>
+                <select v-if="interfaceList.length > 0" class="form-select" multiple aria-label="multiple select example" @change="selectInterface($event, $event.target.selectedIndex)" >
+                    <option v-for="(iface, index) of interfaceList" :selected="iface.selected">{{iface.ipv4}} <span class="ifSubtitle">({{iface.ifKey}})</span></option>
+                </select>
+                <p v-else class="error">There was a problem loading your system's network adapters...</p>
             </div>
         </div>
     </div>
@@ -120,6 +118,11 @@ export default {
         font-size: 14px;
         font-family: "Open Sans Regular";
         padding: 8px 18px 0 18px;
+    }
+
+    .ifSubtitle {
+        color: #888!important;
+        font-size: 10px!important;
     }
 
     
