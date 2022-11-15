@@ -39,6 +39,7 @@ export default {
             console.log(test)
             if (this.serverAddress) {
                 window.ipcRenderer.send('toMain', { command: 'addServer', address: this.serverAddress, name: "Donnie's Minecraft Server" })
+                this.serverAddress = ''
             } else {
                 //server address is not valid
                 this.showError("No server address entered!")
@@ -81,7 +82,7 @@ export default {
             </div>
             <serverDivider v-if="serverList.length > 0" text="Saved Servers"/>
             <div v-if="serverList.length > 0" class="serverList">
-                <serverObject v-for="(server, index) in serverList" :address="server.address" :index="index" />
+                <serverObject v-for="(server, index) in serverList" :address="server" :index="index" />
                 
                 
             </div>

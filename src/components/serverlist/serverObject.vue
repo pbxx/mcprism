@@ -100,7 +100,7 @@ export default {
                 
                 <div class="srv-infoChip">
                     <span class="label">Address:</span>
-                    <span class="data">{{address}}</span>
+                    <span class="data">{{serverList[index].address}}</span>
                 </div>
             </div>
         </div>
@@ -201,6 +201,7 @@ export default {
         flex-direction: column;
         font-family: "Open Sans Regular";
         padding: 0 8px 0 8px;
+        flex-grow: 1;
 
         overflow: hidden;
         white-space: nowrap;
@@ -220,7 +221,7 @@ export default {
 
     .srv-infoChip > .data {
         color: var(--bodytext-color);
-        font-size: 14px;
+        font-size: 12.9px;
         font-weight: 500;
         margin-left: 4px;
         margin-top: -3px;

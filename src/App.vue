@@ -92,30 +92,34 @@ export default {
   --desktop-footerbutton-font-size: 16px;
   --desktop-footerbutton-caret-height: 11px;
 
-  --bottomlink-inactive-color: #c4c4c4;
+  --bottomlink-inactive-color: #ffffff7f;
   --bottomlink-active-color: #ffffff;
 
   --body-bg: #e3e3e3;
 /*
   --nav-dark-gradient: #110d28;
   --nav-light-gradient: #231759;
-*/
+
   --nav-dark-gradient: #201f1f;
   --nav-light-gradient: #454343;
+*/
+  --nav-light-gradient: #454343;
+  --nav-dark-gradient: #201f1f;
+  --footer-light-gradient: #454343;
 
   --card-dark-gradient: #8a8a8a;
   --card-light-gradient: #d1d1d1;
 
-  --footer-dark-gradient: #201f1f;
-  --footer-light-gradient: #252424;
+  --footer-dark-gradient: #121212;
+  
 
 /*
   --online-color: #50c989;
   --online-shadow-color: #50c989;
 */
 
-  --online-color: #5bf55d;
-  --online-shadow-color: #50c98e;
+  --online-color: #5de698;
+  --online-shadow-color: #50c9b5;
 
   --offline-color: #585858;
   --offline-shadow-color: #313131;

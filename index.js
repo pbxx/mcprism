@@ -74,7 +74,23 @@ init()
     } else if (arg.command == 'deleteServer') {
       //handle deletion request
       //currently just shut down active proxy set
+      console.log(`Deletion requested for index ${arg.index}`)
       globalState.serverList.splice(arg.index, 1)
+
+
+      //update the active index in case it changes
+      
+      for ( var i = 0; i < globalState.serverList.length; i++ ) {
+        if (globalState.serverList[i].active === true) {
+          //this is the new activeIndex
+          console.log("FOUND NEW ACTIVE INDEX")
+          globalState.activeServerIndex = i
+          
+        }
+      }
+
+      console.log(globalState.serverList)
+      console.log(globalState.activeServerIndex)
       saveState()
       event.reply('fromMain', { command: 'updateState', state: globalState })
   
@@ -85,7 +101,7 @@ init()
   
     } else if (arg.command == "activateProxy") {
       
-      activateProxy(arg.index, "10.88.0.117", () => {
+      activateProxy(arg.index, globalState.selectedInterface.ipv4, () => {
         saveState()
         event.reply('fromMain', { command: 'updateState', state: globalState })
   
@@ -177,13 +193,14 @@ function activateProxy(index, interface, callback) {
       console.log(response)
 
       globalState.activeServerIndex = index //set active server globally
+      globalState.serverList[index].active = true
 
       if (callback) {
         callback(response)
       }
 
     })
-    globalState.serverList[index].active = true
+    
   } else {
     //there is already an active proxy
   }
@@ -291,19 +308,19 @@ function validateSelectedInterface() {
   var ipv4 = globalState.selectedInterface["ipv4"]
   var ifKey = globalState.selectedInterface["ifKey"]
 
-  if (ipv4 || ifKey) {
-    //one of ipv4 || ifKey were defined, check if this interface exists in the current interfaces
-    var currentInterfaces = getCurrentInterfaces()
+  var currentInterfaces = getCurrentInterfaces()
+
+  if (ipv4 && ifKey) {
+    //ipv4 && ifKey were defined, check if this interface exists in the current interfaces
     var itsFine = false
-
     var ifI = 0
-
     for (const ifObject of currentInterfaces) {
       //check through all interfaces to see if there is a match
       if ( ifObject.ipv4 == ipv4 && ifObject.ifKey == ifKey ) {
         //the ip and interface name are still available!, set this interface as current
         currentInterfaces[ifI].selected = true
         itsFine = true
+        break
       }
       ifI++
     }

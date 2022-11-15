@@ -6,6 +6,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
+    "start": "electron .",
     "electron:start": "vite build && electron ."
   },
   "dependencies": {

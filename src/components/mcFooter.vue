@@ -29,7 +29,7 @@ import { RouterLink, RouterView } from 'vue-router'
 .mcFooter {
     height: var(--d-footerH)!important;
     width: 100%!important;
-    background: linear-gradient(180deg, var(--footer-dark-gradient), var(--footer-light-gradient));
+    background: linear-gradient(180deg, var(--nav-dark-gradient), var(--footer-light-gradient));
 }
 
 .mcf-left {
