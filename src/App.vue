@@ -108,6 +108,17 @@ export default {
 
   --footer-dark-gradient: #201f1f;
   --footer-light-gradient: #252424;
+
+/*
+  --online-color: #50c989;
+  --online-shadow-color: #50c989;
+*/
+
+  --online-color: #5bf55d;
+  --online-shadow-color: #50c98e;
+
+  --offline-color: #585858;
+  --offline-shadow-color: #313131;
 }
 
 body {

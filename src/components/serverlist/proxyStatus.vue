@@ -51,6 +51,7 @@ export default {
 }
 
 .prs-statusDisplay.active {
-    color: #25a850!important;
+    color: var(--online-color)!important;
+    /*text-shadow: 0px 0px 3px var(--online-shadow-color);*/
 }
 </style>

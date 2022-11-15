@@ -3,6 +3,7 @@ const path = require("path");
 const {MCProxy} = require("./mcproxy.js")
 const os = require('node:os');
 const fs = require('node:fs');
+const Gamedig = require('gamedig');
 
 var globalState = {
   serverList: [],
@@ -123,6 +124,27 @@ init()
       }
   
   
+    } else if (arg.command == "getServerInfo") {
+      //get server info for index and respond
+      if (arg.index != undefined) {
+        //valid index passed, get server info
+        var cleanAddr = validateAddress(globalState.serverList[arg.index].address)
+        console.log(cleanAddr)
+
+        Gamedig.query({
+            type: 'minecraftpe',
+            host: cleanAddr.address,
+            port: cleanAddr.port,
+        }).then((state) => {
+            var serverState = { index: arg.index, online: true, serverMotd: state.name, players: `${state.players.length}/${state.maxplayers}` }
+            console.log(serverState);
+            event.reply('fromMain', { command: 'serverInfoResponse', ...serverState })
+        }).catch((error) => {
+            console.log("Server is offline");
+            event.reply('fromMain', { command: 'serverInfoResponse', index: arg.index, online: false, serverMotd: '', players: '' })
+        });
+      }
+      
     } else if (arg.command == "closeWindow") {
       //event.sender.close()
       BrowserWindow.getAllWindows()[event.sender.id-1].close()

@@ -1,10 +1,37 @@
+<script setup>
+import { ref, computed } from 'vue'
+
+import playerCountBubble from './playerCountBubble.vue'
+import nameInfochip from './nameInfochip.vue'
+</script>
+
 <script>
 export default {
     props: ["address", "image", "index", "isActiveServerDisplay"],
     inject: ['serverList', 'activeServerIndex'],
+    data() {
+        return {
+            online: -1,
+            serverMotd: 'Loading server info...',
+            players: ''
+        }
+    },
     created() {
         // props are exposed on `this`
-        console.log(`This is happening in serverObject.vue`, this.address)
+        console.log(`This is happening in serverObject.vue`, this.address, this.index)
+        this.checkServerInfo(this.index)
+    },
+    mounted() {
+        window.ipcRenderer.receive('fromMain', (arg) => {
+        //console.log(arg, this.index) // prints "pong" in the DevTools console
+            if (arg.command == 'serverInfoResponse' && arg.index == this.index ) {
+                //this is a response to this server's info request
+                console.log(arg.online)
+                this.online = arg.online
+                this.serverMotd = arg.serverMotd
+                this.players = arg.players
+            }
+        })
     },
     methods: {
         deactivateProxy(index) {
@@ -21,8 +48,19 @@ export default {
         },
         serverSettings(index) {
             console.log(`Server settings requested for index ${index}`)
+        },
+        checkServerInfo(index) {
+            console.log(`Server info requested for index ${index}`)
+            window.ipcRenderer.send('toMain', { command: 'getServerInfo', index })
         }
     },
+    provide() {
+        return {
+            online: computed(() => this.online),
+            serverMotd: computed(() => this.serverMotd),
+            players: computed(() => this.players),
+        }
+    }
     
 }
 </script>
@@ -40,11 +78,7 @@ export default {
                 <img src="../../assets/img/mc-block.png" />
             </div>
             <div class="ic-right">
-                <div class="srv-infoChip">
-                        <span class="label">Name:</span>
-                        <span class="data">Loading server info...</span>
-                    
-                </div>
+                <nameInfochip />
                 <div class="srv-infoChip">
                     <span class="label">Address:</span>
                     <span class="data">{{serverList[activeServerIndex].address}}</span>
@@ -54,6 +88,7 @@ export default {
         <div class="so-stack buttonstack">
             <button type="button" class="btn btn-secondary btn-sm" @click="deactivateProxy(index)"><i class="bi bi-power"></i></button>
         </div>
+        <playerCountBubble online="online" min="3" max="22"/>
     </div>
     <div v-else-if="!serverList[index].active" class="serverObject">
         <div class="so-stack">
@@ -61,11 +96,8 @@ export default {
                 <img src="../../assets/img/mc-block.png" />
             </div>
             <div class="ic-right">
-                <div class="srv-infoChip">
-                        <span class="label">Name:</span>
-                        <span class="data">Loading server info...</span>
-                    
-                </div>
+                <nameInfochip />
+                
                 <div class="srv-infoChip">
                     <span class="label">Address:</span>
                     <span class="data">{{address}}</span>
@@ -77,6 +109,7 @@ export default {
             <button type="button" class="btn btn-secondary btn-sm" @click="serverSettings(index)"><i class="bi bi-gear-fill"></i></button>
             <button type="button" class="btn btn-danger btn-sm" @click="deleteServer(index)"><i class="bi bi-trash-fill"></i></button>
         </div>
+        <playerCountBubble online="offline" min="3" max="22"/>
     </div>
 </template>
 
@@ -87,7 +120,8 @@ export default {
         margin: 9px 18px 12px 18px;
         padding: 12px;
         display: grid;
-        box-shadow: 0px 1px 24px -7px rgba(0,0,0,0.75);
+        box-shadow: 0px 0px 24px -7px rgba(0,0,0,0.75);
+        position: relative;
     }
 
     .serverObject.inactive {
@@ -96,7 +130,9 @@ export default {
     }
 
     .serverObject.active {
-        background: linear-gradient(0deg, #1c1c1d, #2b2c2d);
+        /*background: linear-gradient(0deg, #47475c, #718191);*/
+        background: linear-gradient(0deg, #121212, #2b2e4b);
+        box-shadow: 0px 0px 24px -7px rgba(0,0,0,0.75);
     }
 
     .so-stack {
@@ -107,6 +143,7 @@ export default {
 
     .so-stack > .ic-left img {
         height: 68px;
+        border-radius: 4px;
 
     }
 
@@ -165,31 +202,42 @@ export default {
         font-family: "Open Sans Regular";
         padding: 0 8px 0 8px;
 
+        overflow: hidden;
+        white-space: nowrap;
+
     }
 
     .srv-infoChip > .label {
         color: var(--bodytext-color);
         font-size: 10px;
         font-weight: 700;
+        
     }
 
     .serverObject.active .srv-infoChip > .label {
-        color: #a7a7a7!important;
+        color: #e3e3e3!important;
     }
 
     .srv-infoChip > .data {
         color: var(--bodytext-color);
         font-size: 14px;
         font-weight: 500;
+        margin-left: 4px;
         margin-top: -3px;
+
+        
     }
 
     .serverObject.active .srv-infoChip > .data {
-        color: white!important;
+        color: #e8e8e8!important;
+        
     }
 
     .so-buttonbox {
         flex-direction: row-reverse;
         align-items: flex-end;
     }
+
+    
+
 </style>
