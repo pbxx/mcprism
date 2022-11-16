@@ -17,15 +17,36 @@ export default {
         }
     },
     created() {
+        if (!this.isActiveServerDisplay) {
+            //get initial server info for server bubble
+            this.checkServerInfo(this.index)
+        }
+    },
+    updated() {
         // props are exposed on `this`
         console.log(`This is happening in serverObject.vue`, this.address, this.index)
-        this.checkServerInfo(this.index)
+        if (this.isActiveServerDisplay && this.activeServerIndex != -1) {
+            //get updated server info for server bubble
+            //default values first, so the bubble appears as loading
+            this.online = -1,
+            this.serverMotd = 'Loading server info...',
+            this.players = ''
+            this.checkServerInfo(this.activeServerIndex)
+        }
+        
     },
     mounted() {
         window.ipcRenderer.receive('fromMain', (arg) => {
         //console.log(arg, this.index) // prints "pong" in the DevTools console
             if (arg.command == 'serverInfoResponse' && arg.index == this.index ) {
                 //this is a response to this server's info request
+                //update data for regular server display
+                console.log(arg.online)
+                this.online = arg.online
+                this.serverMotd = arg.serverMotd
+                this.players = arg.players
+            } else if (this.isActiveServerDisplay && arg.command == 'serverInfoResponse' && arg.index == this.activeServerIndex ) {
+                //update data for active server display
                 console.log(arg.online)
                 this.online = arg.online
                 this.serverMotd = arg.serverMotd
@@ -69,7 +90,7 @@ export default {
     <div v-if="isActiveServerDisplay && activeServerIndex == -1" class="serverObject inactive">
         <div class="so-inactive-textbox">
             <h2>No server active</h2>
-            <p>Click the <em>activate</em> button on a server below to start the proxy</p>
+            <p>Click the <i class="bi bi-power"></i> button on a server below to start the proxy</p>
         </div>
     </div>
     <div v-else-if="isActiveServerDisplay && activeServerIndex != -1" class="serverObject active">

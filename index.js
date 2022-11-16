@@ -16,8 +16,8 @@ var activeServer = null;
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 400,
-    height: 700,
+    width: 420,
+    height: 750,
     titleBarStyle: 'hidden',
     titleBarOverlay: false,
     //frame: false,
@@ -73,13 +73,12 @@ init()
 
     } else if (arg.command == 'deleteServer') {
       //handle deletion request
-      //currently just shut down active proxy set
       console.log(`Deletion requested for index ${arg.index}`)
+
+      //delete the server from the global server list
       globalState.serverList.splice(arg.index, 1)
 
-
       //update the active index in case it changes
-      
       for ( var i = 0; i < globalState.serverList.length; i++ ) {
         if (globalState.serverList[i].active === true) {
           //this is the new activeIndex
