@@ -25,7 +25,8 @@ module.exports.MCProxy = class {
                 port: options.port,
                 ipv6: false,
                 localaddress: options.interface,
-                localport: 56441, //this is what is different here
+                //localport: 56441, //this is what is different here
+                localport: getRandBetween(49000, 65535), //this is what is different here
                 localipv6: false,
                 timeOutTime: 10000
             }
@@ -118,6 +119,13 @@ module.exports.MCProxy = class {
         })
     }
 }
+
+
+
+function getRandBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
 // kept for nostalgia
 // 61653 - lan search port? 
 // 62482 - lan search port? 

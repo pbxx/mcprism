@@ -181,8 +181,6 @@ init()
 
 
 
-
-
 function activateProxy(index, interface, callback) {
   if (globalState.activeServerIndex == -1) {
     console.log(`IM RUNNING`)
