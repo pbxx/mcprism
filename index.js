@@ -18,7 +18,7 @@ var globalState = {
   
 }
 
-console.log(globalState.platform)
+console.log(`LAUNCHED! Platform is: ${globalState.platform}, type: ${typeof(globalState.platform)}`)
 
 var activeServer = null;
 
@@ -406,7 +406,7 @@ function init() {
 
       if (loadedState) {
         //state file exists, load it into globalState
-        globalState = loadedState
+        globalState = { ...globalState, ...loadedState}
         //grab computer's list of interfaces
         //console.log(getCurrentInterfaces())
         globalState.interfaceList = validateSelectedInterface()

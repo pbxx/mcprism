@@ -29,6 +29,7 @@ export default {
         //this is a server list update
         console.log(this.serverListLength)
         console.log(this.activeServerIndex)
+        console.log(arg.state)
 
         this.serverList = arg.state.serverList
         this.interfaceList = arg.state.interfaceList

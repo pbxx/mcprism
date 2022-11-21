@@ -2,12 +2,6 @@
 import windowButtons from '../components/windows-windowbuttons.vue'
 </script>
 
-<script>
-    export default {
-        inject: ['platform'],
-    }
-</script>
-
 <template>
     <div class="mcHeader">
         
@@ -19,7 +13,7 @@ import windowButtons from '../components/windows-windowbuttons.vue'
 
             </div>
         </div>
-        <windowButtons v-if="platform != 'darwin'" />
+        <windowButtons />
     </div>
 </template>
 

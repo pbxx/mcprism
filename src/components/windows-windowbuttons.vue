@@ -9,14 +9,18 @@ export default {
             console.log(`Window minimize requested...`)
             window.ipcRenderer.send('toMain', { command: 'minimizeWindow' })
         }
+    },
+    inject: ['platform'],
+    updated() {
+        console.log(`WindowButtons updated! Platform is ${this.platform}, type: ${typeof(this.platform)}`)
     }
 }
 </script>
 
 <template>
     <div class="windowButtons">
-        <button @click="closeWindow()"><i class="bi bi-x-lg close"></i></button>
-        <button @click="minimizeWindow()" class="minButton"><i class="bi bi-dash-lg minimize"></i></button>
+        <button v-if="platform == 'win32'" @click="closeWindow()"><i class="bi bi-x-lg close"></i></button>
+        <button v-if="platform == 'win32'" @click="minimizeWindow()" class="minButton"><i class="bi bi-dash-lg minimize"></i></button>
     </div>
 </template>
 

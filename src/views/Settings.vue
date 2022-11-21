@@ -28,7 +28,7 @@ export default {
             return len
         }
     },
-    inject: ['activeServerIndex', 'interfaceList', 'selectedInterface', 'platform'],
+    inject: ['activeServerIndex', 'interfaceList', 'selectedInterface'],
     
     
 }
@@ -42,7 +42,7 @@ export default {
         </div>
         <div class="sl-bottom">
             <serverDivider text="Default Interface"/>
-            <p v-if="platform == win32" class="settingsNote"><em>Note: Selecting interfaces may not work in macOS... It is recommended to use 0.0.0.0</em></p>
+            <p v-if="platform == 'darwin'" class="settingsNote"><em>Note: Selecting interfaces may not work in macOS... It is recommended to use 0.0.0.0</em></p>
             <div class="settingsObject">
                 <!--<p v-if="activeServerIndex != null && serverList.length">No active servers. Click the activate button on a server to begin. </p>-->
                 <select v-if="interfaceList.length > 0" class="form-select" multiple aria-label="multiple select example" @change="selectInterface($event, $event.target.selectedIndex)" >
