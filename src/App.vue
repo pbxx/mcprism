@@ -15,7 +15,8 @@ export default {
     return {
         serverList,
         interfaceList,
-        activeServerIndex
+        activeServerIndex,
+        platform : ""
     }
   },
   mounted() {
@@ -32,6 +33,7 @@ export default {
         this.serverList = arg.state.serverList
         this.interfaceList = arg.state.interfaceList
         this.activeServerIndex = arg.state.activeServerIndex
+        this.platform = arg.state.platform
       }
     })
   },
@@ -43,6 +45,7 @@ export default {
       activeServerIndex: computed(() => this.activeServerIndex),
       serverList: computed(() => this.serverList),
       interfaceList: computed(() => this.interfaceList),
+      platform: computed(() => this.platform),
     }
   }
 }

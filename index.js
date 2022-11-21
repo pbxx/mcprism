@@ -4,13 +4,21 @@ const {MCProxy} = require("./mcproxy.js")
 const os = require('node:os');
 const fs = require('node:fs');
 const Gamedig = require('gamedig');
+const process = require('node:process');
+
+
+
 
 var globalState = {
   serverList: [],
   activeServerIndex: -1,
   interfaceList: [],
-  selectedInterface: {}
+  selectedInterface: {},
+  platform: process.platform
+  
 }
+
+console.log(globalState.platform)
 
 var activeServer = null;
 
@@ -82,7 +90,7 @@ init()
       for ( var i = 0; i < globalState.serverList.length; i++ ) {
         if (globalState.serverList[i].active === true) {
           //this is the new activeIndex
-          console.log("FOUND NEW ACTIVE INDEX")
+          //console.log("FOUND NEW ACTIVE INDEX")
           globalState.activeServerIndex = i
           
         }

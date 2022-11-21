@@ -6,12 +6,14 @@ import router from './router'
 
 import "bootstrap-icons/font/bootstrap-icons.css"
 import "bootstrap/dist/css/bootstrap.min.css"
+//import { platform } from 'node:process';
 import "bootstrap"
 
 //import './assets/main.css'
 
 const app = createApp(App)
 app.config.unwrapInjectedRef = true
+
 app.use(createPinia())
 app.use(router)
 
