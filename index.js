@@ -14,13 +14,26 @@ var globalState = {
   activeServerIndex: -1,
   interfaceList: [],
   selectedInterface: {},
-  platform: process.platform
+  platform: process.platform,
+  
   
 }
 
 console.log(`LAUNCHED! Platform is: ${globalState.platform}, type: ${typeof(globalState.platform)}`)
 
 var activeServer = null;
+var localhost = "notwork"
+
+//set the working definition of 'localhost' based on the platform
+if (globalState.platform == 'win32') {
+  //windows likes 'localhost'
+  globalState.localhost = 'localhost'
+} else {
+  //macOS likes '0.0.0.0'
+  //need to test on linux...
+  globalState.localhost = '0.0.0.0'
+}
+
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -284,7 +297,7 @@ function getCurrentInterfaces() {
   var osInterfaces = os.networkInterfaces()
   var outArr = []
 
-  outArr.push({ ifKey: "default", ipv4: "localhost", selected: false }) //push initial localhost option
+  outArr.push({ ifKey: "default", ipv4: globalState.localhost, selected: false }) //push initial 127.0.0.1 option
 
   for ( const key in osInterfaces ) {
     //iterate through each interface on system
@@ -293,7 +306,7 @@ function getCurrentInterfaces() {
       if (addressObj.family == "IPv4") {
         //currently only using IPv4 local addresses
         if (!addressObj.address.startsWith("127.0.0") && !addressObj.address.startsWith("169.")) {
-          //exclude localhost and autoconfig (169.x.x.x) address(es) from the selectable list 
+          //exclude 127.0.0.1 and autoconfig (169.x.x.x) address(es) from the selectable list 
           //add this address to the list of selectable interfaces
           outArr.push({ ifKey: key, ipv4: addressObj.address, selected: false })
         }
@@ -306,7 +319,7 @@ function getCurrentInterfaces() {
 
 function validateSelectedInterface() {
   //check if the selected interface still exists,
-  //replace it with localhost if it doesn't
+  //replace it with 127.0.0.1 if it doesn't
 
   //ifObject format is: { ifKey: "Ethernet/eth0", ipv4: "192.168.0.10"},
 
@@ -331,15 +344,15 @@ function validateSelectedInterface() {
     }
 
     if (!itsFine) {
-      //no valid address/adapter pair was found, set to localhost
+      //no valid address/adapter pair was found, set to 127.0.0.1
       currentInterfaces[0].selected = true
-      globalState.selectedInterface = { ifKey: "default", ipv4: "localhost" }
+      globalState.selectedInterface = { ifKey: "default", ipv4: globalState.localhost }
     }
 
   } else {
-    //one or both were undefined, set selected interface as localhost
+    //one or both were undefined, set selected interface as 127.0.0.1
     currentInterfaces[0].selected = true
-    globalState.selectedInterface = { ifKey: "default", ipv4: "localhost" }
+    globalState.selectedInterface = { ifKey: "default", ipv4: globalState.localhost }
   }
 
   return currentInterfaces
@@ -402,6 +415,9 @@ function saveState() {
 function init() {
   return new Promise((resolve, reject) => {
     try {
+      
+
+      //load the app state if it exists
       var loadedState = loadState()
 
       if (loadedState) {
@@ -423,10 +439,12 @@ function init() {
         
       } else {
         //state file doesn't exist, create it after setting up initial app state
-        globalState.selectedInterface = { ifKey: "localhost", ipv4: "127.0.0.1" }
+        globalState.selectedInterface = { ifKey: "default", ipv4: globalState.localhost }
+        globalState.interfaceList = validateSelectedInterface()
         saveState()
   
       }
+      
       //everything loaded, move on to loading app
       resolve()
 
