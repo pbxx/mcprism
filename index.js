@@ -22,16 +22,16 @@ var globalState = {
 console.log(`LAUNCHED! Platform is: ${globalState.platform}, type: ${typeof(globalState.platform)}`)
 
 var activeServer = null;
-var localhost = "notwork"
+var mpLocalhost = "notwork"
 
 //set the working definition of 'localhost' based on the platform
 if (globalState.platform == 'win32') {
   //windows likes 'localhost'
-  globalState.localhost = 'localhost'
+  mpLocalhost = 'localhost'
 } else {
   //macOS likes '0.0.0.0'
   //need to test on linux...
-  globalState.localhost = '0.0.0.0'
+  mpLocalhost = '0.0.0.0'
 }
 
 
@@ -297,7 +297,7 @@ function getCurrentInterfaces() {
   var osInterfaces = os.networkInterfaces()
   var outArr = []
 
-  outArr.push({ ifKey: "default", ipv4: globalState.localhost, selected: false }) //push initial 127.0.0.1 option
+  outArr.push({ ifKey: "default", ipv4: mpLocalhost, selected: false }) //push initial 127.0.0.1 option
 
   for ( const key in osInterfaces ) {
     //iterate through each interface on system
@@ -346,13 +346,13 @@ function validateSelectedInterface() {
     if (!itsFine) {
       //no valid address/adapter pair was found, set to 127.0.0.1
       currentInterfaces[0].selected = true
-      globalState.selectedInterface = { ifKey: "default", ipv4: globalState.localhost }
+      globalState.selectedInterface = { ifKey: "default", ipv4: mpLocalhost }
     }
 
   } else {
     //one or both were undefined, set selected interface as 127.0.0.1
     currentInterfaces[0].selected = true
-    globalState.selectedInterface = { ifKey: "default", ipv4: globalState.localhost }
+    globalState.selectedInterface = { ifKey: "default", ipv4: mpLocalhost }
   }
 
   return currentInterfaces
@@ -423,10 +423,8 @@ function init() {
       if (loadedState) {
         //state file exists, load it into globalState
         globalState = { ...globalState, ...loadedState}
-        //grab computer's list of interfaces
-        //console.log(getCurrentInterfaces())
-        globalState.interfaceList = validateSelectedInterface()
-        //saveState()
+        globalState.platform = process.platform //update platform state in case state file came from a different   platform
+        globalState.interfaceList = validateSelectedInterface() //grab computer's list of interfaces
 
         if (globalState.activeServerIndex != -1) {
           //there is an active server in the saved state, activate it
@@ -439,7 +437,7 @@ function init() {
         
       } else {
         //state file doesn't exist, create it after setting up initial app state
-        globalState.selectedInterface = { ifKey: "default", ipv4: globalState.localhost }
+        globalState.selectedInterface = { ifKey: "default", ipv4: mpLocalhost }
         globalState.interfaceList = validateSelectedInterface()
         saveState()
   
