@@ -36,7 +36,7 @@ export default {
         this.interfaceList = arg.state.interfaceList
         this.activeServerIndex = arg.state.activeServerIndex
         this.platform = arg.state.platform
-        this.localPortRange = [arg.state.startPort, arg.state.endPort]
+        this.localPortRange = arg.state.localPortRange
       }
     })
   },
