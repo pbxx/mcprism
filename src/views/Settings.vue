@@ -64,6 +64,7 @@ export default {
                 <span> - </span>
                 <input type="number" class="form-control" v-model="highPort" @change="selectPortRange($event)">
             </div>
+            <p class="settingsNote"><em>All changes are applied and saved automatically!</em></p>
         </div>
     </div>
 </template>
@@ -159,7 +160,8 @@ export default {
 
     .settingsNote {
         padding: 8px 18px 0 18px;
-        font-size: 12px;
+        font-size: 12.9px;
+        text-align: center;
         margin-bottom: 0px!important;
     }
 
