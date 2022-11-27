@@ -24,6 +24,7 @@
     "@vitejs/plugin-vue-jsx": "^2.0.1",
     "@vue/test-utils": "^2.1.0",
     "electron": "^21.2.0",
+    "electron-builder": "^23.6.0",
     "jsdom": "^20.0.1",
     "vite": "^3.1.8",
     "vitest": "^0.24.3"
