@@ -16,7 +16,8 @@ export default {
         serverList,
         interfaceList,
         activeServerIndex,
-        platform : ""
+        platform : "",
+        localPortRange : []
     }
   },
   mounted() {
@@ -35,6 +36,7 @@ export default {
         this.interfaceList = arg.state.interfaceList
         this.activeServerIndex = arg.state.activeServerIndex
         this.platform = arg.state.platform
+        this.localPortRange = [arg.state.startPort, arg.state.endPort]
       }
     })
   },
@@ -47,6 +49,7 @@ export default {
       serverList: computed(() => this.serverList),
       interfaceList: computed(() => this.interfaceList),
       platform: computed(() => this.platform),
+      localPortRange: computed(() => this.localPortRange),
     }
   }
 }

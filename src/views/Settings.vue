@@ -8,27 +8,33 @@ import serverDivider from '../components/serverlist/serverlist-divider.vue'
 
 <script>
 export default {
+    inject: ['activeServerIndex', 'interfaceList', 'selectedInterface', 'localPortRange'],
     data: function() {
         return {
             //selectedInterface: {}
+            lowPort: 0,
+            highPort: 1,
         }
     },
     created() {
         console.log(`This is happening in Settings.vue`, this.selectedInterface)
+        this.lowPort = this.localPortRange[0]
+        this.highPort = this.localPortRange[1]
     },
     methods: {
         selectInterface(event, index) {
-            //test ipc
-            //console.log(test)
-            ///var iface = this.interfaceList[index]
             window.ipcRenderer.send('toMain', { command: 'selectInterface', index })
+        },
+        selectPortRange(event) {
+            var newLocalPortRange = [ this.lowPort, this.highPort ]
+            window.ipcRenderer.send('toMain', { command: 'selectPortRange', newLocalPortRange })
         },
         getServerListLength() {
             var len = this.serverList.length
             return len
         }
     },
-    inject: ['activeServerIndex', 'interfaceList', 'selectedInterface'],
+    
     
     
 }
@@ -49,6 +55,14 @@ export default {
                     <option v-for="(iface, index) of interfaceList" :selected="iface.selected">{{iface.ipv4}} <span class="ifSubtitle">({{iface.ifKey}})</span></option>
                 </select>
                 <p v-else class="error">There was a problem loading your system's network adapters...</p>
+            </div>
+            <serverDivider text="Port Range"/>
+            <p class="settingsNote"><em>Bedrock proxy requires access to UDP port 19132, as well as a random selected one from the range below (default 49,000-65,535).</em></p>
+            <div class="settingsObject portRange">
+                <!--<p v-if="activeServerIndex != null && serverList.length">No active servers. Click the activate button on a server to begin. </p>-->
+                <input type="number" class="form-control" v-model="lowPort" @change="selectPortRange($event)">
+                <span> - </span>
+                <input type="number" class="form-control" v-model="highPort" @change="selectPortRange($event)">
             </div>
         </div>
     </div>
@@ -114,11 +128,28 @@ export default {
         padding: 18px;
     }
 
+
     .settingsObject p {
         color: var(--bodytext-color);
         font-size: 14px;
         font-family: "Open Sans Regular";
         padding: 8px 18px 0 18px;
+    }
+
+    
+    .settingsObject.portRange {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .settingsObject.portRange input {
+        width: 25vw;
+        
+    }
+
+    .settingsObject.portRange span {
+        font-size: 12px;
+        margin: 0 8px 0 8px;
     }
 
     .ifSubtitle {

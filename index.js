@@ -15,6 +15,7 @@ var globalState = {
   interfaceList: [],
   selectedInterface: {},
   platform: process.platform,
+  localPortRange: [49000, 65535]
   
   
 }
@@ -158,8 +159,27 @@ init()
         saveState()
         event.reply('fromMain', { command: 'updateState', state: globalState })
       }
-  
-  
+    } else if (arg.command == "selectPortRange") {
+      globalState.localPortRange = arg.newLocalPortRange
+
+      if (globalState.activeServerIndex != -1) {
+        //there is an active server that will need to be switched to the new port range
+        var serverIndex = globalState.activeServerIndex
+        deactivateProxy((response) => {
+          //proxy deactivated
+          activateProxy(serverIndex, globalState.selectedInterface.ipv4, () => {
+            //proxy activated
+            saveState()
+            event.reply('fromMain', { command: 'updateState', state: globalState })
+      
+          })
+        })
+      } else {
+        //no active server currently, just change the default port range
+        saveState()
+        event.reply('fromMain', { command: 'updateState', state: globalState })
+      }
+
     } else if (arg.command == "getServerInfo") {
       //get server info for index and respond
       if (arg.index != undefined) {
@@ -190,6 +210,7 @@ init()
       //console.log(event.sender.id)
   
     }
+
   })
 
 
@@ -207,7 +228,7 @@ function activateProxy(index, interface, callback) {
     console.log(`IM RUNNING`)
     var cleanAddr = validateAddress(globalState.serverList[index].address)
 
-    activeServer = new MCProxy({verbose: true, host: cleanAddr.address, port: cleanAddr.port , interface}, (response) => {
+    activeServer = new MCProxy({verbose: true, host: cleanAddr.address, port: cleanAddr.port , interface, localPortRange: globalState.localPortRange}, (response) => {
       console.log(response)
 
       globalState.activeServerIndex = index //set active server globally

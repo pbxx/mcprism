@@ -4,7 +4,7 @@ const st = require('simpletype-js')
 
 module.exports.MCProxy = class {
     constructor(options, callback) {
-        let tcheck = st.checkSync({host: "string", interface: "string", port: "number"}, options)
+        let tcheck = st.checkSync({ host: "string", interface: "string", port: "number", localPortRange: "array" }, options)
         let err = null
 
         if (tcheck.correct) {
@@ -19,6 +19,8 @@ module.exports.MCProxy = class {
                 localipv6: false,
                 timeOutTime: 10000
             }
+            
+
 
             var secondaryPortOptions = {
                 address: options.host,
@@ -26,7 +28,8 @@ module.exports.MCProxy = class {
                 ipv6: false,
                 localaddress: options.interface,
                 //localport: 56441, //this is what is different here
-                localport: getRandBetween(49000, 65535), //this is what is different here
+                //localport: getRandBetween(49000, 65535),
+                localport: getRandBetween(...options.localPortRange),
                 localipv6: false,
                 timeOutTime: 10000
             }
