@@ -42,6 +42,7 @@ function createWindow() {
     height: 750,
     titleBarStyle: 'hidden',
     titleBarOverlay: false,
+    resizable: false,
     //frame: false,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -50,7 +51,7 @@ function createWindow() {
 
   win.loadFile("dist/index.html");
   // Open the DevTools.
-  win.webContents.openDevTools({ mode: "detach" })
+  //win.webContents.openDevTools({ mode: "detach" })
 }
 
 // APP INIT
