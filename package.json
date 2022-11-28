@@ -1,13 +1,17 @@
 {
-  "name": "webapp",
-  "version": "0.0.0",
+  "name": "MCPrism",
+  "version": "0.1.0",
+  "description": "A simple app that allows playing custom minecraft bedrock servers on consoles with LAN",
+  "author": "PBX",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest --environment jsdom --root src/",
     "start": "electron .",
-    "electron:start": "vite build && electron ."
+    "electron:start": "vite build && electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "bootstrap": "^5.2.2",
@@ -28,5 +32,35 @@
     "jsdom": "^20.0.1",
     "vite": "^3.1.8",
     "vitest": "^0.24.3"
+  },
+  "build": {
+    "appId": "mcprism-app",
+    "mac": {
+      "category": "app.category.entertainment"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ]
+    },
+    "win": {
+      "target": "portable",
+      "icon": "icon.ico"
+    }
   }
 }

@@ -80,11 +80,6 @@ export default {
 </template>
 
 <style>
-@font-face {
-  font-family: "Open Sans Regular";
-  src: local("Open Sans Regular"),
-   url(./fonts/Open_Sans/OpenSans-VariableFont_wdth,wght.ttf) format("truetype");
-}
 
 :root {
   --d-navH: 130px;

@@ -6,8 +6,9 @@ import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // https://vitejs.dev/config/
+console.log(__dirname)
 export default defineConfig({
-  //base: path.resolve(__dirname, "./dist/"),
+  //base: path.resolve(__dirname, "./vuedist/"),
   base: '',
   plugins: [vue(), vueJsx()],
   resolve: {
@@ -15,4 +16,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
+  build: {
+    outDir: path.resolve(__dirname, 'vuedist'),
+    //outDir: '../vuedist',
+  }
 })

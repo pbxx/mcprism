@@ -20,7 +20,12 @@ var globalState = {
   
 }
 
+var appOptions = {
+  stateFile: path.join(app.getPath("userData"), "mcPrism-state.json")
+}
+
 console.log(`LAUNCHED! Platform is: ${globalState.platform}, type: ${typeof(globalState.platform)}`)
+console.log(`STATEFILE is: ${appOptions.stateFile}`)
 
 var activeServer = null;
 var mpLocalhost = "notwork"
@@ -49,7 +54,7 @@ function createWindow() {
     },
   });
 
-  win.loadFile("dist/index.html");
+  win.loadFile("vuedist/index.html");
   // Open the DevTools.
   //win.webContents.openDevTools({ mode: "detach" })
 }
@@ -423,15 +428,15 @@ function validateAddress(address) {
 }
 
 function loadState() {
-  if (fs.existsSync("./mcPrism-state.json")) {
-    return JSON.parse(fs.readFileSync("./mcPrism-state.json"))
+  if (fs.existsSync(appOptions.stateFile)) {
+    return JSON.parse(fs.readFileSync(appOptions.stateFile))
   } else {
     return false
   }
 }
 
 function saveState() {
-  fs.writeFileSync("./mcPrism-state.json", JSON.stringify(globalState))
+  fs.writeFileSync(appOptions.stateFile, JSON.stringify(globalState))
 }
 
 function init() {

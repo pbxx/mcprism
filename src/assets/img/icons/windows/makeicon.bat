@@ -5,4 +5,4 @@ inkscape --export-filename 32.png -w 32 -h 32 ../mcprism-desktop-icon.svg
 inkscape --export-filename 24.png -w 24 -h 24 ../mcprism-desktop-icon.svg
 inkscape --export-filename 16.png -w 16 -h 16 ../mcprism-desktop-icon.svg
 
-magick convert 16.png 24.png 32.png 48.png 64.png 256.png mcprism.ico
+magick convert 16.png 24.png 32.png 48.png 64.png 256.png ../../../../../build/mcprism.ico
