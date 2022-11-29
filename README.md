@@ -1,35 +1,25 @@
-# webapp
+![localImage](./src/assets/mcprism-only.png)
 
-This template should help get you started developing with Vue 3 in Vite.
+# MCPrism
 
-## Recommended IDE Setup
+A simple tool for connecting to Minecraft bedrock Servers on consoles, using LAN. 
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Quick Start
 
-## Customize configuration
+Navigate to the latest release in the releases page, and download the binary for your platform.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+The Windows `.exe` is a portable executable, so no installation is needed. Simply open the application and add some servers! 
 
-## Project Setup
+The MacOS `.dmg` installs like a normal MacOS/MacOSX application
 
-```sh
-npm install
-```
+Currently tested on Windows and MacOS. 
 
-### Compile and Hot-Reload for Development
+## Port configuration
 
-```sh
-npm run dev
-```
+MCPrism uses ports 19132, as well as a random selected port between 49000-65535. You can select a custom port rang for the random port in the settings menu. 
 
-### Compile and Minify for Production
+## How it works
 
-```sh
-npm run build
-```
+MCPrism proxies Bedrock LAN traffic to your local network using UDP. This allows consoles to join internet Bedrock servers, normally only accessible by IP input, using your local network and the "friends" tab on Minecraft. 
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
 
-```sh
-npm run test:unit
-```
