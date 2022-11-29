@@ -1,7 +1,10 @@
 <p align="center">
   <img src="https://assets.pbxdesign.xyz/mcp-icon-256.png">
 </p>
-![GitHub all releases](https://img.shields.io/github/downloads/pbxx/mcprism/total)
+<p align="center">
+  <img src="https://img.shields.io/github/downloads/pbxx/mcprism/total">
+</p>
+
 <h2 align="center">MCPrism</h2>
 <p align="center">
   A simple tool for connecting to Minecraft bedrock servers on consoles, using LAN. 
