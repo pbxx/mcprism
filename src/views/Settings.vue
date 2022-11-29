@@ -27,16 +27,36 @@ export default {
         },
         selectPortRange(event) {
             var newLocalPortRange = [ this.lowPort, this.highPort ]
-            window.ipcRenderer.send('toMain', { command: 'selectPortRange', newLocalPortRange })
+            if (this.validatePorts(this.lowPort, this.highPort)) {
+                window.ipcRenderer.send('toMain', { command: 'selectPortRange', newLocalPortRange })
+            }
+            
         },
         getServerListLength() {
             var len = this.serverList.length
             return len
+        },
+        validatePorts() {
+            var valid = true
+            if (this.highPort > 65535) {
+                valid = false
+                this.highPort = 65535
+            }
+            if (this.highPort < 0) {
+                valid = false
+                this.highPort = 0
+            }
+            if (this.lowPort > 65535) {
+                valid = false
+                this.lowPort = 65535
+            }
+            if (this.lowPort < 0) {
+                valid = false
+                this.lowPort = 0
+            }
+            return valid
         }
     },
-    
-    
-    
 }
 </script>
 
