@@ -1,10 +1,13 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/5501027/204428626-4dabfc49-8e7b-453c-bf02-a74af1693de6.PNG">
+  <img src="https://assets.pbxdesign.xyz/mcp-icon-256.png">
 </p>
 
 # MCPrism
 A simple tool for connecting to Minecraft bedrock Servers on consoles, using LAN. 
 
+<p align="center">
+  <img src="https://assets.pbxdesign.xyz/mcp-window-both-small.png">
+</p>
 
 ## Quick Start
 Navigate to the latest release in the releases page, and download the binary for your platform.
