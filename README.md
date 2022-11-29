@@ -5,9 +5,11 @@
 <h2 align="center">MCPrism</h2>
 <p align="center">
   A simple tool for connecting to Minecraft bedrock servers on consoles, using LAN. 
-  
+</p> 
+<p align="center">
   Usage requires a PC or Mac in order to act as a proxy between your console(s) on your LAN.
-  
+</p> 
+<p align="center">
   Once MCPrism is running, the active server will become visible in the "Friends" tab, on your console's Minecraft.
 </p> 
 
