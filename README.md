@@ -13,8 +13,9 @@
   Once MCPrism is running, the active server will become visible in the "Friends" tab, on your console's Minecraft.
 </p> 
 
-<p align="center"> </p>
-<p align="center"> </p>
+<br />
+<br />
+<br />
 
 <h2 align="center">Quick Start</h2>
 Navigate to the latest release in the releases page, and download the binary for your platform.
