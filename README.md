@@ -1,13 +1,10 @@
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/5501027/204427501-41ff2fce-22f7-4216-9caa-9c28ba73a3f9.png">
+  <img src="https://user-images.githubusercontent.com/5501027/204428626-4dabfc49-8e7b-453c-bf02-a74af1693de6.PNG">
 </p>
 
 # MCPrism
 A simple tool for connecting to Minecraft bedrock Servers on consoles, using LAN. 
 
-<p align="center">
-  <img src="https://user-images.githubusercontent.com/5501027/204428626-4dabfc49-8e7b-453c-bf02-a74af1693de6.PNG">
-</p>
 
 ## Quick Start
 Navigate to the latest release in the releases page, and download the binary for your platform.
