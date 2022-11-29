@@ -4,10 +4,10 @@
 
 <h2 align="center">MCPrism</h2>
 <p align="center">
-  A simple tool for connecting to Minecraft bedrock servers on consoles, using LAN. 
+  Turns public Minecraft Bedrock servers into LAN games on your network, no DNS changes required! The easiet way to join online servers on consoles without IP.
 </p> 
 <p align="center">
-  Usage requires a PC or Mac in order to act as a proxy between your console(s) on your LAN.
+  Usage requires a PC or Mac in order to act as a proxy between your console(s) on your LAN, and the bedrock server on the internet.
 </p> 
 <p align="center">
   Once MCPrism is running, the active server will become visible in the "Friends" tab, on your console's Minecraft.
