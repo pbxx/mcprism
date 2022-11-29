@@ -7,7 +7,9 @@
   A simple tool for connecting to Minecraft bedrock Servers on consoles, using LAN.
 </p> 
 
-## Quick Start
+
+
+<h2 align="center">Quick Start</h2>
 Navigate to the latest release in the releases page, and download the binary for your platform.
 
 The Windows `.exe` is a portable executable, so no installation is needed. Simply open the application and add some servers! 
