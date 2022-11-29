@@ -13,6 +13,9 @@
   Once MCPrism is running, the active server will become visible in the "Friends" tab, on your console's Minecraft.
 </p> 
 
+<p align="center"> </p>
+<p align="center"> </p>
+
 <h2 align="center">Quick Start</h2>
 Navigate to the latest release in the releases page, and download the binary for your platform.
 
@@ -27,10 +30,13 @@ Currently tested on Windows and MacOS.
   <img src="https://assets.pbxdesign.xyz/mcp-window-both-small.png">
 </p>
 
-## Port configuration
+<h2 align="center">Port configuration</h2>
 MCPrism uses ports 19132, as well as a random selected port between 49000-65535. You can select a custom port range for the random port in the settings menu. 
 
-## How it works
+<h2 align="center">How it works</h2>
 MCPrism proxies Bedrock LAN traffic to your local network using UDP. This allows consoles to join internet Bedrock servers, normally only accessible by IP input, using your local network and the "friends" tab on Minecraft. 
 
+<h2 align="center">Compatibility</h2>
+MCPrism has currently been tested on Windows 10 and MacOS 10.14 (Mojave).
 
+Linux support coming soon...
