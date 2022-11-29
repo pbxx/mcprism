@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://assets.pbxdesign.xyz/mcp-icon-256.png">
 </p>
-
+![GitHub all releases](https://img.shields.io/github/downloads/pbxx/mcprism/total)
 <h2 align="center">MCPrism</h2>
 <p align="center">
   A simple tool for connecting to Minecraft bedrock servers on consoles, using LAN. 
@@ -26,7 +26,6 @@ The MacOS `.dmg` installs like a normal MacOS/MacOSX application
 Currently tested on Windows and MacOS. 
 
 <br />
-<br />
 
 <h2 align="center">Screenshots</h2>
 <p align="center">
@@ -34,15 +33,19 @@ Currently tested on Windows and MacOS.
 </p>
 
 <br />
-<br />
 
 <h2 align="center">Port configuration</h2>
 MCPrism uses ports 19132, as well as a random selected port between 49000-65535. You can select a custom port range for the random port in the settings menu. 
 
+<br />
+
 <h2 align="center">How it works</h2>
 MCPrism proxies Bedrock LAN traffic to your local network using UDP. This allows consoles to join internet Bedrock servers, normally only accessible by IP input, using your local network and the "friends" tab on Minecraft. 
 
+<br />
+
 <h2 align="center">Compatibility</h2>
+
 MCPrism has currently been tested on Windows 10 and MacOS 10.14 (Mojave).
 
-Linux support coming soon...
+Linux support coming soon... 
