@@ -15,7 +15,6 @@
 
 <br />
 <br />
-<br />
 
 <h2 align="center">Quick Start</h2>
 Navigate to the latest release in the releases page, and download the binary for your platform.
@@ -26,10 +25,16 @@ The MacOS `.dmg` installs like a normal MacOS/MacOSX application
 
 Currently tested on Windows and MacOS. 
 
+<br />
+<br />
+
 <h2 align="center">Screenshots</h2>
 <p align="center">
   <img src="https://assets.pbxdesign.xyz/mcp-window-both-small.png">
 </p>
+
+<br />
+<br />
 
 <h2 align="center">Port configuration</h2>
 MCPrism uses ports 19132, as well as a random selected port between 49000-65535. You can select a custom port range for the random port in the settings menu. 
