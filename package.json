@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "A simple app that allows playing custom minecraft bedrock servers on consoles with LAN",
   "author": "PBX",
+  "license" : "ISC",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

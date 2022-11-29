@@ -60,9 +60,9 @@ export default {
             <p class="settingsNote"><em>Bedrock proxy requires access to UDP port 19132, as well as a random selected one from the range below (default 49,000-65,535).</em></p>
             <div class="settingsObject portRange">
                 <!--<p v-if="activeServerIndex != null && serverList.length">No active servers. Click the activate button on a server to begin. </p>-->
-                <input type="number" class="form-control" v-model="lowPort" @change="selectPortRange($event)">
+                <input type="number" class="form-control" v-model="lowPort" :min=0 :max=65535 @change="selectPortRange($event)">
                 <span> - </span>
-                <input type="number" class="form-control" v-model="highPort" @change="selectPortRange($event)">
+                <input type="number" class="form-control" v-model="highPort" :min=0 :max=65535 @change="selectPortRange($event)">
             </div>
             <p class="settingsNote"><em>All changes are applied and saved automatically!</em></p>
         </div>
