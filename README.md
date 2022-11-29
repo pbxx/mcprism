@@ -1,4 +1,6 @@
-![mcprism-only](https://user-images.githubusercontent.com/5501027/204427501-41ff2fce-22f7-4216-9caa-9c28ba73a3f9.png)
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/5501027/204427501-41ff2fce-22f7-4216-9caa-9c28ba73a3f9.png">
+</p>
 
 # MCPrism
 
