@@ -4,10 +4,15 @@
 
 <h2 align="center">MCPrism</h2>
 <p align="center">
-  A simple tool for connecting to Minecraft bedrock Servers on consoles, using LAN.
+  A simple tool for connecting to Minecraft bedrock servers on consoles, using LAN. <br>
+  
+  Usage requires a PC or Mac in order to act as a proxy between your console(s) on your LAN. <br>
+  
+  Once MCPrism is running, the active server will become visible in the "Friends" tab, on your console's Minecraft. <br>
+  <br>
+  <br>
+  <br>
 </p> 
-
-
 
 <h2 align="center">Quick Start</h2>
 Navigate to the latest release in the releases page, and download the binary for your platform.
@@ -24,7 +29,7 @@ Currently tested on Windows and MacOS.
 </p>
 
 ## Port configuration
-MCPrism uses ports 19132, as well as a random selected port between 49000-65535. You can select a custom port rang for the random port in the settings menu. 
+MCPrism uses ports 19132, as well as a random selected port between 49000-65535. You can select a custom port range for the random port in the settings menu. 
 
 ## How it works
 MCPrism proxies Bedrock LAN traffic to your local network using UDP. This allows consoles to join internet Bedrock servers, normally only accessible by IP input, using your local network and the "friends" tab on Minecraft. 
