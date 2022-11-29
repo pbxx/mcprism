@@ -2,12 +2,10 @@
   <img src="https://assets.pbxdesign.xyz/mcp-icon-256.png">
 </p>
 
-# MCPrism
-A simple tool for connecting to Minecraft bedrock Servers on consoles, using LAN. 
-
+<h2 align="center">MCPrism</h2>
 <p align="center">
-  <img src="https://assets.pbxdesign.xyz/mcp-window-both-small.png">
-</p>
+  A simple tool for connecting to Minecraft bedrock Servers on consoles, using LAN.
+</p> 
 
 ## Quick Start
 Navigate to the latest release in the releases page, and download the binary for your platform.
@@ -17,6 +15,11 @@ The Windows `.exe` is a portable executable, so no installation is needed. Simpl
 The MacOS `.dmg` installs like a normal MacOS/MacOSX application
 
 Currently tested on Windows and MacOS. 
+
+<h2 align="center">Screenshots</h2>
+<p align="center">
+  <img src="https://assets.pbxdesign.xyz/mcp-window-both-small.png">
+</p>
 
 ## Port configuration
 MCPrism uses ports 19132, as well as a random selected port between 49000-65535. You can select a custom port rang for the random port in the settings menu. 
