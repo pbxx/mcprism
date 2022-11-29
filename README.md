@@ -1,9 +1,6 @@
 <p align="center">
   <img src="https://assets.pbxdesign.xyz/mcp-icon-256.png">
 </p>
-<p align="center">
-  <img src="https://img.shields.io/github/downloads/pbxx/mcprism/total">
-</p>
 
 <h2 align="center">MCPrism</h2>
 <p align="center">
@@ -15,6 +12,9 @@
 <p align="center">
   Once MCPrism is running, the active server will become visible in the "Friends" tab, on your console's Minecraft.
 </p> 
+<p align="center">
+  <img src="https://assets.pbxdesign.xyz/mcp-onxbox.gif">
+</p>
 
 <br />
 <br />
