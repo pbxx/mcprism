@@ -4,7 +4,7 @@
 
 <h2 align="center">MCPrism</h2>
 <p align="center">
-  Turns public Minecraft Bedrock servers into LAN games on your network, no DNS changes required! The easiet way to join online servers on consoles without IP.
+  Turns public Minecraft Bedrock servers into LAN games on your network, no DNS changes required! The easiest way to join online servers on consoles without IP.
 </p> 
 <p align="center">
   Usage requires a PC or Mac in order to act as a proxy between your console(s) on your LAN, and the bedrock server on the internet.
