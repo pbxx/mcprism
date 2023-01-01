@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://assets.pbxdesign.xyz/mcp-icon-256.png">
+  <img src="https://public.pbxdesign.xyz/mcprism/windows/256.png">
 </p>
 
 <h2 align="center">MCPrism</h2>
@@ -13,7 +13,7 @@
   Once MCPrism is running, the active server will become visible in the "Friends" tab, on your console's Minecraft app.
 </p> 
 <p align="center">
-  <img src="https://assets.pbxdesign.xyz/mcp-onxbox.gif">
+  <img src="https://public.pbxdesign.xyz/mcprism/onxbox.gif">
 </p>
 
 <br />
@@ -39,7 +39,7 @@ Currently tested on Windows and MacOS.
 
 <h2 align="center">Screenshots</h2>
 <p align="center">
-  <img src="https://assets.pbxdesign.xyz/mcp-window-both-small.png">
+  <img src="https://public.pbxdesign.xyz/mcprism/screenshot-dual.png">
 </p>
 
 <br />
