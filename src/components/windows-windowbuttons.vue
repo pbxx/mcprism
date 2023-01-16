@@ -19,8 +19,8 @@ export default {
 
 <template>
     <div class="windowButtons">
-        <button v-if="platform == 'win32'" @click="closeWindow()"><i class="bi bi-x-lg close"></i></button>
-        <button v-if="platform == 'win32'" @click="minimizeWindow()" class="minButton"><i class="bi bi-dash-lg minimize"></i></button>
+        <button v-if="platform != 'darwin'" @click="closeWindow()"><i class="bi bi-x-lg close"></i></button>
+        <button v-if="platform != 'darwin'" @click="minimizeWindow()" class="minButton"><i class="bi bi-dash-lg minimize"></i></button>
     </div>
 </template>
 

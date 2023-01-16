@@ -42,17 +42,35 @@ if (globalState.platform == 'win32') {
 
 
 function createWindow() {
-  const win = new BrowserWindow({
-    width: 420,
-    height: 750,
-    titleBarStyle: 'hidden',
-    titleBarOverlay: false,
-    resizable: false,
-    //frame: false,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-    },
-  });
+  //spawn app window
+  var bwOptions = {}
+  if (process.platform == "darwin") {
+    bwOptions = {
+      width: 420,
+      height: 750,
+      titleBarStyle: 'hidden',
+      titleBarOverlay: false,
+      resizable: false,
+      //frame: false,
+      webPreferences: {
+        preload: path.join(__dirname, "preload.js"),
+      },
+    }
+  } else {
+    bwOptions = {
+      width: 420,
+      height: 750,
+      titleBarStyle: 'hidden',
+      titleBarOverlay: false,
+      resizable: false,
+      frame: false,
+      webPreferences: {
+        preload: path.join(__dirname, "preload.js"),
+      },
+    }
+  }
+
+  const win = new BrowserWindow(bwOptions);
 
   win.loadFile("vuedist/index.html");
   // Open the DevTools.
