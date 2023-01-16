@@ -2,7 +2,7 @@
   "name": "MCPrism",
   "version": "0.1.0",
   "description": "A simple app that allows playing custom minecraft bedrock servers on consoles with LAN",
-  "author": "PBX",
+  "author": "PBX <airlew@gmail.com>",
   "license" : "ISC",
   "scripts": {
     "dev": "vite",
@@ -57,7 +57,8 @@
       "target": [
         "AppImage",
         "deb"
-      ]
+      ],
+      "category": "Network"
     },
     "win": {
       "target": "portable",
