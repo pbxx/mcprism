@@ -56,6 +56,4 @@ MCPrism proxies Bedrock LAN traffic between your local network and a Minecraft s
 
 <h2 align="center">Compatibility</h2>
 
-MCPrism has currently been tested on Windows 10 (21H2) and MacOS 10.14 (Mojave).
-
-Linux support coming soon... 
+MCPrism has currently been tested on x64 and arm64.
